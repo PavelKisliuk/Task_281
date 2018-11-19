@@ -1,29 +1,30 @@
-import java.io.FileNotFoundException;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Formatter;
-import java.util.FormatterClosedException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Task_281 {
 	public static void main(String[] args) {
-		Coin test = new Coin();
-		try(final Formatter output = new Formatter("OUTPUT.TXT")) {
-			output.format(test.toString());
-		}catch (FileNotFoundException | FormatterClosedException e) {
+		final String outputPath = "OUTPUT.TXT";
+		final Coin test = new Coin();
+		try(final BufferedWriter output = Files.newBufferedWriter(Paths.get(outputPath))) {
+			output.write(test.toString());
+		}catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 }
 
-
-class Coin{
+//-----------------------------------------------------------------------------
+/*public*/ class Coin{
+	//-----------------------------------------------------------------------------fields
 	private int countOfTosses;
 	private int countOfTails;
 	private int result;
-
-	public Coin(String path)
+	//-----------------------------------------------------------------------------constructors
+	/*public*/private Coin(final String path)
 	{
 		try(final Scanner input = new Scanner(Paths.get(path))) {
 			//-----------------------------------------------------------------------------
@@ -45,11 +46,11 @@ class Coin{
 		}
 	}
 
-	public Coin()
+	/*public*/ Coin()
 	{
 		this("INPUT.TXT");
 	}
-
+	//-----------------------------------------------------------------------------methods for constructors
 	private void tossRecursive(int counter, int counterOfTails, boolean side)
 	{
 		if(side) {
@@ -65,7 +66,8 @@ class Coin{
 			}
 		}
 	}
-
+	//-----------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------methods
 	@Override
 	public String toString()
 	{
